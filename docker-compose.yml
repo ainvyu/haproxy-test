@@ -1,0 +1,30 @@
+version: '2'
+services:
+  frontproxy:
+    build:
+      context: frontproxy
+      dockerfile: Dockerfile
+    expose:
+      - "10000"
+      - "32700"
+    ports:
+      - "10000:10000"
+      - "32700:32700"
+    depends_on:
+      - webserver
+    networks:
+      - sandbox
+  webserver:
+    build:
+      context: webserver
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    networks:
+      - sandbox
+
+networks:
+  sandbox:
+    driver: bridge
